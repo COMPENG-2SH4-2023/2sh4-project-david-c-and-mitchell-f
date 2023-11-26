@@ -18,8 +18,7 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-int main(void)
-{
+int main(void){
     Initialize();
     while(game->getExitFlagStatus() == false)  
     {
@@ -32,8 +31,7 @@ int main(void)
     CleanUp();
 }
 
-void Initialize(void)
-{
+void Initialize(void){
     MacUILib_init();
     MacUILib_clearScreen();
 
@@ -41,21 +39,18 @@ void Initialize(void)
     player = new Player(game);
 }
 
-void GetInput(void)
-{
+void GetInput(void){
    player->updatePlayerDir();
 }
 
-void RunLogic(void)
-{
-
+void RunLogic(void){
+    player->movePlayer();
 }
 
-void DrawScreen(void)
-{
+void DrawScreen(void){
     MacUILib_clearScreen();
-    objPos playerPosi;
-    player->getPlayerPos(playerPosi);
+    objPos playerPos;
+    player->getPlayerPos(playerPos);
         for (int i = 0; i < game->getBoardSizeY(); i++){
             for (int j = 0; j < game->getBoardSizeX(); j++){
                 if(j == game->getBoardSizeX()-1){
@@ -64,8 +59,8 @@ void DrawScreen(void)
                 else if (i == 0 || j == 0 || i == game->getBoardSizeY()-1){
                     MacUILib_printf("#");
                 }      
-                else if(i == playerPosi.y && j == playerPosi.x){
-                    MacUILib_printf("%c", playerPosi.symbol);
+                else if(i == playerPos.y && j == playerPos.x){
+                    MacUILib_printf("%c", playerPos.symbol);
                 }
                 else{
                     /*
@@ -89,15 +84,11 @@ void DrawScreen(void)
         //MacUILib_printf("\nPress space to exit at anytime\n");
 }
 
-void LoopDelay(void)
-{
+void LoopDelay(void){
     MacUILib_Delay(DELAY_CONST); // 0.1s delay
 }
 
-
-void CleanUp(void)
-{
+void CleanUp(void){
     MacUILib_clearScreen();    
-  
     MacUILib_uninit();
 }
