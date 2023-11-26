@@ -1,18 +1,15 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
-
+#include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
 #define DELAY_CONST 100000
-#define HORIZONTAL 20
-#define VERTICAL 10 
 
-bool exitFlag;
-
-objPos playerPos;
-objPos apple;
+GameMechs* game;
+Player* player;
 
 void Initialize(void);
 void GetInput(void);
@@ -21,14 +18,10 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-
-
 int main(void)
 {
-
     Initialize();
-
-    while(exitFlag == false)  
+    while(game->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -37,24 +30,20 @@ int main(void)
     }
 
     CleanUp();
-
 }
-
 
 void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
 
-    playerPos.setObjPos(9,5,'@');
-    apple.setObjPos(1,1,'$');
-
-    exitFlag = false;
+    game = new GameMechs(26,13);
+    player = new Player(game);
 }
 
 void GetInput(void)
 {
-   
+   player->updatePlayerDir();
 }
 
 void RunLogic(void)
@@ -65,20 +54,18 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-    if(exitFlag == 0){
-        for (int i = 0; i < VERTICAL; i++){
-            for (int j = 0; j < HORIZONTAL; j++){
-                if(j == 19){
+    objPos playerPosi;
+    player->getPlayerPos(playerPosi);
+        for (int i = 0; i < game->getBoardSizeY(); i++){
+            for (int j = 0; j < game->getBoardSizeX(); j++){
+                if(j == game->getBoardSizeX()-1){
                     MacUILib_printf("#\n");
                 }
-                else if (i == 0 || j == 0 || i == 9){
+                else if (i == 0 || j == 0 || i == game->getBoardSizeY()-1){
                     MacUILib_printf("#");
                 }      
-                else if(i == playerPos.y && j == playerPos.x){
-                    MacUILib_printf("%c", playerPos.symbol);
-                }
-                else if(i == apple.y && j == apple.x){
-                    MacUILib_printf("%c", apple.symbol);
+                else if(i == playerPosi.y && j == playerPosi.x){
+                    MacUILib_printf("%c", playerPosi.symbol);
                 }
                 else{
                     /*
@@ -99,8 +86,8 @@ void DrawScreen(void)
         }
         //for (i = 0; i < my_strlen(goalString); i++) MacUILib_printf("%c", mysteryString[i]);
         //MacUILib_printf("\nMove Count: %d", moveCount);
-        //MacUILib_printf("\nPress space to exit at anytime\n"); 
-    }
+        //MacUILib_printf("\nPress space to exit at anytime\n");
+        MacUILib_printf("spotx: %d, spoty: %d", playerPosi.x, playerPosi.y); 
 }
 
 void LoopDelay(void)

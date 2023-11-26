@@ -33,6 +33,7 @@ void Player::updatePlayerDir()
                 if(myDir!=DOWN)
                 {
                     myDir=UP;
+                    MacUILib_printf("up");
                 }
                 break;
             case 'a': 
