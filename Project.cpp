@@ -48,7 +48,7 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    
+
 }
 
 void DrawScreen(void)
@@ -87,7 +87,6 @@ void DrawScreen(void)
         //for (i = 0; i < my_strlen(goalString); i++) MacUILib_printf("%c", mysteryString[i]);
         //MacUILib_printf("\nMove Count: %d", moveCount);
         //MacUILib_printf("\nPress space to exit at anytime\n");
-        MacUILib_printf("spotx: %d, spoty: %d", playerPosi.x, playerPosi.y); 
 }
 
 void LoopDelay(void)
