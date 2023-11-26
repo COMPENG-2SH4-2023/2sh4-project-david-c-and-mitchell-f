@@ -1,15 +1,14 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
-
+#include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
 #define DELAY_CONST 100000
 #define HORIZONTAL 20
 #define VERTICAL 10 
-
-bool exitFlag;
 
 objPos playerPos;
 objPos apple;
