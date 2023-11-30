@@ -7,20 +7,30 @@ Player::Player(GameMechs* thisGMRef)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
-    playerPos.setObjPos(5,5,'@');
-
-    // more actions to be included
+	// Insert 4 body elements, then 1 unique head element
+	
+   // more actions to be included
+   objPos temp;
+   temp.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*'); 
+   playerPosList= new objPosArrayList();
+   playerPosList->insertHead(temp); 
+    playerPosList->insertHead(temp); 
+    playerPosList->insertHead(temp); 
+    playerPosList->insertHead(temp); 
+    playerPosList->insertHead(temp); 
+      
 }
 
 
 Player::~Player()
 {
     // delete any heap members here
+    delete[] playerPosList; 
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+objPosArrayList* Player::getPlayerPos()
 {
-    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol); 
+    return playerPosList; 
     // return the reference to the playerPos arrray list
 }
 
@@ -61,50 +71,60 @@ void Player::updatePlayerDir()
 
 void Player::movePlayer()
 {
-   switch(myDir)
-    {
-        case UP:
-            playerPos.y-=1;
-            if(playerPos.y==0)
-            {
-                playerPos.y=mainGameMechsRef->getBoardSizeY()-2; 
-            }
-            break;
+    objPos currhead;
+    playerPosList->getHeadElement(currhead);
+    switch(myDir)
+        {
+            case UP:
+                currhead.y--;
+                if(currhead.y<=0)
+                {
+                    currhead.y=mainGameMechsRef->getBoardSizeY()-2; 
+                    
+                } 
+                break;
 
 
-        case LEFT:
-            playerPos.x-=1;
-            if(playerPos.x==0)
-            {
-                playerPos.x=mainGameMechsRef->getBoardSizeX()-2; 
-            }
-            break;
+            case LEFT:
+                currhead.x-=1;
+                
+                if(currhead.x<=0)
+                {
+                    currhead.x=mainGameMechsRef->getBoardSizeX()-2; 
+                
+                }
+                break;
 
 
-        case RIGHT:
-            playerPos.x+=1; 
-            if(playerPos.x==mainGameMechsRef->getBoardSizeX()-1)
-            {
-                playerPos.x=1; 
-            }
-            break;
+            case RIGHT:
+                currhead.x+=1;
+            
+                if(currhead.x==(mainGameMechsRef->getBoardSizeX()-1))
+                {
+                    currhead.x=1; 
+                    
+                }
+                break;
 
 
-        case DOWN:
-            playerPos.y+=1;
-            if(playerPos.y==mainGameMechsRef->getBoardSizeY()-1)
-            {
-                playerPos.y=1; 
-            }
-            break;
+            case DOWN:
+                currhead.y+=1;
+                if(currhead.y==(mainGameMechsRef->getBoardSizeY()-1))
+                {
+                    currhead.y=1; 
+                    
+                }
+                break;
 
-        case STOP:
-            break;
+            case STOP:
+                break;
 
-        default:
-            MacUILib_printf("unknown node"); 
-            break;
+            default:
+                MacUILib_printf("unknown node"); 
+                break;
+        }
+        playerPosList->insertHead(currhead);
+        playerPosList->removeTail(); 
+        // PPA3 Finite State Machine logic
     }
-    // PPA3 Finite State Machine logic
-}
 
