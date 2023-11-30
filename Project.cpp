@@ -10,6 +10,8 @@ using namespace std;
 
 GameMechs* game;
 Player* player;
+objPos food;
+objPos playerPos;
 
 void Initialize(void);
 void GetInput(void);
@@ -20,14 +22,12 @@ void CleanUp(void);
 
 int main(void){
     Initialize();
-    while(game->getExitFlagStatus() == false)  
-    {
+    while(game->getExitFlagStatus() == false){
         GetInput();
         RunLogic();
         DrawScreen();
         LoopDelay();
     }
-
     CleanUp();
 }
 
@@ -37,6 +37,8 @@ void Initialize(void){
 
     game = new GameMechs(26,13);
     player = new Player(game);
+    game->generateFood(playerPos);
+    game->getFoodPos(food);
 }
 
 void GetInput(void){
@@ -45,43 +47,36 @@ void GetInput(void){
 
 void RunLogic(void){
     player->movePlayer();
+    game->clearInput();
 }
 
 void DrawScreen(void){
     MacUILib_clearScreen();
-    objPos playerPos;
+    
     player->getPlayerPos(playerPos);
-        for (int i = 0; i < game->getBoardSizeY(); i++){
-            for (int j = 0; j < game->getBoardSizeX(); j++){
-                if(j == game->getBoardSizeX()-1){
-                    MacUILib_printf("#\n");
-                }
-                else if (i == 0 || j == 0 || i == game->getBoardSizeY()-1){
-                    MacUILib_printf("#");
-                }      
-                else if(i == playerPos.y && j == playerPos.x){
-                    MacUILib_printf("%c", playerPos.symbol);
-                }
-                else{
-                    /*
-                    hasChar = 0;
-                    for(k = 0; k < 5; k++){
-                        if((i == itemBin[k].y) && (j == itemBin[k].x)){
-                            MacUILib_printf("%c", itemBin[k].symbol);
-                            hasChar = 1;
-                        }
-                    }*/
-                    //if (hasChar == 0) 
-                    MacUILib_printf(" ");
-                    
-                }
+    for (int i = 0; i < game->getBoardSizeY(); i++){
+        for (int j = 0; j < game->getBoardSizeX(); j++){
+            if(j == game->getBoardSizeX()-1){
+                MacUILib_printf("#\n");
             }
-        // [TODO]   Display the "Mystery String" contents at the bottom of the game board
-        //          To help players keep track of their game progress.
+            else if (i == 0 || j == 0 || i == game->getBoardSizeY()-1){
+                MacUILib_printf("#");
+            }      
+            else if(i == playerPos.y && j == playerPos.x){
+                MacUILib_printf("%c", playerPos.symbol);
+            }
+            else{
+                int spaceCondition = 0;
+                if((i == food.y) && (j == food.x)){
+                    MacUILib_printf("%c", food.symbol);
+                    spaceCondition = 1;
+                } 
+                if (spaceCondition == 0){
+                    MacUILib_printf(" ");   
+                } 
+            }
         }
-        //for (i = 0; i < my_strlen(goalString); i++) MacUILib_printf("%c", mysteryString[i]);
-        //MacUILib_printf("\nMove Count: %d", moveCount);
-        //MacUILib_printf("\nPress space to exit at anytime\n");
+    }
 }
 
 void LoopDelay(void){
