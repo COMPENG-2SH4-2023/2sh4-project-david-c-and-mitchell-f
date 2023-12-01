@@ -10,10 +10,10 @@ Player::Player(GameMechs* thisGMRef)
 	// Insert 4 body elements, then 1 unique head element
 	
    // more actions to be included
-   objPos temp;
-   temp.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*'); 
-   playerPosList= new objPosArrayList();
-   playerPosList->insertHead(temp); 
+    objPos temp;
+    temp.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*'); 
+    playerPosList= new objPosArrayList();
+    playerPosList->insertHead(temp); 
     playerPosList->insertHead(temp); 
     playerPosList->insertHead(temp); 
     playerPosList->insertHead(temp); 
@@ -39,7 +39,7 @@ void Player::updatePlayerDir()
     char input = mainGameMechsRef->getInput(); 
     switch(input)
     {
-        case ' ':
+        case 27:
             myDir=EXIT;
             break;
         case 'w': 
