@@ -39,6 +39,9 @@ void Player::updatePlayerDir()
     char input = mainGameMechsRef->getInput(); 
     switch(input)
     {
+        case ' ':
+            myDir=EXIT;
+            break;
         case 'w': 
             if(myDir!=DOWN)
             {
@@ -75,6 +78,8 @@ void Player::movePlayer()
     playerPosList->getHeadElement(currhead);
     switch(myDir)
         {
+            case EXIT:
+                mainGameMechsRef->setExitTrue(); 
             case UP:
                 currhead.y--;
                 if(currhead.y<=0)

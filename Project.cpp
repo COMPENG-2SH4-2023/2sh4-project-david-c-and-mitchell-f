@@ -44,6 +44,7 @@ void Initialize(void){
 
 void GetInput(void){
    player->updatePlayerDir();
+   
 }
 
 void RunLogic(void){
@@ -55,7 +56,7 @@ void DrawScreen(void){
     int p;
     bool draw;
     objPosArrayList *playerbody;
-    playerbody=player->getPlayerPos(); 
+    playerbody=player->getPlayerPos();
     objPos tempbody;
     objPos playerPos;
     
