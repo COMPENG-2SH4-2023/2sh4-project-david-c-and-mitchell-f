@@ -1,5 +1,4 @@
 #include "objPosArrayList.h"
-#include <stdio.h>
 
 // Paste your CUTE Tested implementation here.
 // Paste your CUTE Tested implementation here.
@@ -35,8 +34,7 @@ void objPosArrayList::insertHead(objPos thisPos)
         }
         aList[0].setObjPos(thisPos); 
         sizeList++;
-    }
-    printf("%d", sizeList); 
+    } 
    
 }
 
