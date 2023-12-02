@@ -10,7 +10,7 @@ using namespace std;
 #define DELAY_CONST 100000
 
 GameMechs* game;
-Player* player; 
+Player* player;
 
 
 void Initialize(void);
@@ -39,16 +39,23 @@ void Initialize(void){
 
     game = new GameMechs(26,13);
     player = new Player(game);
-
+/*
+    objPos oneSlot;
+    objPosArrayList *playerPos;
+    oneSlot.setObjPos(game->getBoardSizeX()/2, game->getBoardSizeY()/2, '*');
+    printf("%d, %d, %c")
+    playerPos->insertHead(oneSlot);
+*/
+   // game->generateFood(playerPos);
 }
 
 void GetInput(void){
    player->updatePlayerDir();
-   
 }
 
 void RunLogic(void){
     player->movePlayer();
+    game->clearInput();
 }
 
 void DrawScreen(void){
@@ -56,63 +63,42 @@ void DrawScreen(void){
     int p;
     bool draw;
     objPosArrayList *playerbody;
-    playerbody=player->getPlayerPos();
+    playerbody=player->getPlayerPos(); 
     objPos tempbody;
-    objPos playerPos;
-    
-   
-    
-        for (int i = 0; i < game->getBoardSizeY(); i++){
-            for (int j = 0; j < game->getBoardSizeX(); j++)
-            {
-                draw=false;
-
-                for(int k=0; k< playerbody->getSize(); k++ )
+    objPos food;
+    game->getFoodPos(food);
+    for (int i = 0; i < game->getBoardSizeY(); i++){
+        for (int j = 0; j < game->getBoardSizeX(); j++){
+            draw=false;
+            for(int k=0; k< playerbody->getSize(); k++ ){
+                playerbody->getElement(tempbody,k);
+                if(tempbody.x==j && tempbody.y==i )
                 {
-                    playerbody->getElement(tempbody,k);
-                    if(tempbody.x==j && tempbody.y==i )
-                    {
-                        MacUILib_printf("%c", tempbody.symbol);
-                        draw=true; 
-                        break;
-                    }
+                    MacUILib_printf("%c", tempbody.symbol);
+                    draw=true; 
+                    break;
                 }
-                if(draw)
-                {
-                    continue;
-                }
-                if(j == game->getBoardSizeX()-1){
-                    MacUILib_printf("#\n");
-                }
-                else if (i == 0 || j == 0 || i == game->getBoardSizeY()-1){
-                    MacUILib_printf("#");
-                }      
-                
-                
-                
-                else{
-                    /*
-                    hasChar = 0;
-                    for(k = 0; k < 5; k++){
-                        if((i == itemBin[k].y) && (j == itemBin[k].x)){
-                            MacUILib_printf("%c", itemBin[k].symbol);
-                            hasChar = 1;
-                        }
-                    }*/
-                    //if (hasChar == 0) 
-                    MacUILib_printf(" ");
-                    
-                }
-               
             }
-        // [TODO]   Display the "Mystery String" contents at the bottom of the game board
-        //          To help players keep track of their game progress.
+            if(draw){
+                continue;
+            }
+            if(j == game->getBoardSizeX()-1){
+                MacUILib_printf("#\n");
+            }
+            else if (i == 0 || j == 0 || i == game->getBoardSizeY()-1){
+                MacUILib_printf("#");
+            }      
+            else{
+                int spaceCondition = 0;
+                
+                if((i == food.y) && (j == food.x)){
+                    MacUILib_printf("%c", food.symbol);
+                    spaceCondition = 1;
+                } 
+                if (spaceCondition == 0) MacUILib_printf(" ");
+            }  
         }
-        //for (i = 0; i < my_strlen(goalString); i++) MacUILib_printf("%c", mysteryString[i]);
-        //MacUILib_printf("\nMove Count: %d", moveCount);
-        //MacUILib_printf("\nPress space to exit at anytime\n");
-        
-
+    }
 }
 
 void LoopDelay(void){

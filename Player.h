@@ -14,7 +14,7 @@ class Player
     // You will include more data members and member functions to complete your design.
 
     public:
-        enum Dir {UP, DOWN, LEFT, RIGHT, STOP, EXIT};  // This is the direction state
+        enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
 
         Player(GameMechs* thisGMRef);
         ~Player();
@@ -22,6 +22,7 @@ class Player
         objPosArrayList* getPlayerPos(); // Upgrade this in iteration 3.
         void updatePlayerDir();
         void movePlayer();
+        void foodConsumption();
 
     private:
         objPosArrayList *playerPosList;   // Upgrade this in iteration 3.       

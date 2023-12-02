@@ -2,6 +2,7 @@
 #include "MacUILib.h"
 #include <stdlib.h>
 #include <time.h>
+#include "objPosArrayList.h"
 
 GameMechs::GameMechs(){
     input = 0;
@@ -75,11 +76,15 @@ void GameMechs::incrementScore(){
     score += 10;
 }
 
-void GameMechs::generateFood(objPos blockOff){
+void GameMechs::generateFood(objPosArrayList* blockOff){
+    objPos temp;
     srand(time(NULL));
-    do{
-        food.setObjPos(1+(rand() % (boardSizeX-1)), 1+(rand() % (boardSizeY-1)),'o');
-    }while(blockOff.isPosEqual(&food));
+    for (int i = 0; i < blockOff->getSize(); i++){
+        blockOff->getElement(temp,i);
+        do{
+            food.setObjPos(1+(rand() % (boardSizeX-1)), 1+(rand() % (boardSizeY-1)),'o');
+        }while(temp.isPosEqual(&food));
+    }
 }
 
 void GameMechs::getFoodPos(objPos &returnPos){

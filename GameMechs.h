@@ -10,8 +10,7 @@
 using namespace std;
 
 
-class GameMechs
-{
+class GameMechs{
     // Construct the remaining declaration from the project manual.
 
     // Only some sample members are included here
@@ -43,7 +42,7 @@ class GameMechs
         void setInput(char this_input);
         void clearInput();
         void incrementScore();
-        void generateFood(objPos block);
+        void generateFood(objPosArrayList* blockOff);
         void getFoodPos(objPos &returnPos);
 };
 
