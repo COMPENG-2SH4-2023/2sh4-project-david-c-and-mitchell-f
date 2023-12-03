@@ -3,14 +3,14 @@
 
 #include <cstdlib>
 #include <time.h>
-
 #include "objPos.h"
 #include "objPosArrayList.h"
 
 using namespace std;
 
 
-class GameMechs{
+class GameMechs
+{
     // Construct the remaining declaration from the project manual.
 
     // Only some sample members are included here

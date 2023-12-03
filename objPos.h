@@ -7,6 +7,7 @@ class objPos
         int x;
         int y;
         char symbol;
+        int EQUAL;
 
         objPos();
         objPos(objPos &o); // copy constructor
@@ -20,6 +21,7 @@ class objPos
         bool isPosEqual(const objPos* refPos);
         
         char getSymbolIfPosEqual(const objPos* refPos);
+        
 };
 
 #endif
