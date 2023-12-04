@@ -6,6 +6,7 @@ objPos::objPos()
     y = 0;
     symbol = 0; //NULL
     EQUAL=0;
+    //initialization
 }
 
 objPos::objPos(objPos &o)

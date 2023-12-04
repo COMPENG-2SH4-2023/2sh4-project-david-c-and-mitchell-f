@@ -14,10 +14,6 @@ Player::Player(GameMechs* thisGMRef)
     temp.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*'); 
     playerPosList= new objPosArrayList();
     playerPosList->insertHead(temp); 
-    playerPosList->insertHead(temp); 
-    playerPosList->insertHead(temp); 
-    playerPosList->insertHead(temp); 
-    playerPosList->insertHead(temp); 
     currtail.EQUAL=0;
       
 }
@@ -135,7 +131,7 @@ void Player::movePlayer()
                 break;
         }
         playerPosList->insertHead(currhead);
-        if(ref!=true)
+        if(ref!=true || playerPosList->getSize()==0)
         {
             playerPosList->removeTail(); 
             ref=false;

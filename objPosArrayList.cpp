@@ -5,14 +5,14 @@
 // Paste your CUTE Tested implementation here.
 objPosArrayList::objPosArrayList()
 {
-    aList= new objPos[ARRAY_MAX_CAP]; 
+    aList= new objPos[ARRAY_MAX_CAP]; //ensuring we have enough space for the whole snake size 
     sizeList=0;//no valid elements in the list upon start up
     sizeArray=ARRAY_MAX_CAP;
 }
 
 objPosArrayList::~objPosArrayList()
 {
-    delete[] aList;
+    delete[] aList;//clearing the heap of the aList members for memeory managment
 }
 
 int objPosArrayList::getSize()
