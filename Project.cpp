@@ -69,7 +69,8 @@ void RunLogic(void){
     player->movePlayer();
 }
 
-void DrawScreen(void){
+void DrawScreen(void)
+{
     MacUILib_clearScreen();
     int p;
     bool draw;
@@ -121,9 +122,7 @@ void DrawScreen(void){
                 else if (i == 0 || j == 0 || i == game->getBoardSizeY()-1){
                     MacUILib_printf("#");
                 }      
-                
-                
-                
+    
                 else
                 {
                     MacUILib_printf(" ");
@@ -131,18 +130,18 @@ void DrawScreen(void){
                
             }
         }
-        score=game->getScore();
-        MacUILib_printf("SCORE:%d",score); 
+        MacUILib_printf("SCORE:%d",game->getScore()); 
     
 }
 
 void LoopDelay(void)
 {
-    
     MacUILib_Delay(DELAY_CONST); // 0.1s delay
 }
 
-void CleanUp(void){
-    MacUILib_clearScreen();    
+void CleanUp(void)
+{
+    MacUILib_clearScreen();
+    MacUILib_printf("GAME OVER\nFINAL SCORE: %d", game->getScore());   
     MacUILib_uninit();
 }

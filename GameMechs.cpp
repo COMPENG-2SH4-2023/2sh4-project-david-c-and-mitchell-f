@@ -11,7 +11,6 @@ GameMechs::GameMechs(){
     boardSizeX = 20;
     boardSizeY = 10;
     score = 0;
-    objPos food;
 }
 
 GameMechs::GameMechs(int boardX, int boardY){
@@ -21,7 +20,6 @@ GameMechs::GameMechs(int boardX, int boardY){
     boardSizeX = boardX;
     boardSizeY = boardY;
     score = 0;
-    objPos food;
     srand(time(NULL));
    
 }
@@ -88,6 +86,7 @@ void GameMechs::generateFood(objPosArrayList* blockOff){
     for(i=0; i<k; i++)
     {
         blockOff->getElement(posholder,i);
+
         if(posholder.x==food.x && posholder.y==food.y)
         {
             food.setObjPos(1+(rand() % (boardSizeX-2)), 1+(rand() % (boardSizeY-2)),'o');
